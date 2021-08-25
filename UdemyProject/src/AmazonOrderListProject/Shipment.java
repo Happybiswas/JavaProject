@@ -18,7 +18,6 @@ public class Shipment {
     ShipmentSpeed shipmentSpeed;
 
 
-
     public Shipment(String shipmentId, String carrier, ShipmentStatus shipmentStatus, String trackingId, Date shippedDate,
                     Date deliveryDate, ShipmentSpeed shipmentSpeed){
 

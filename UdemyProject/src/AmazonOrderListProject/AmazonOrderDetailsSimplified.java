@@ -9,7 +9,7 @@ import java.util.Date;
 public class AmazonOrderDetailsSimplified {
 
 
-    public static void main(String[]args){
+    public static void main(String[] args) {
 
         // create class object
         AmazonOrderDetailsSimplified amazonOd = new AmazonOrderDetailsSimplified();
@@ -23,9 +23,9 @@ public class AmazonOrderDetailsSimplified {
         oderItems = amazonOd.createOrderItems(products);
 
         // customer class
-        Customer customer = new Customer("102","Happy Biswas","784 Elton Farm Circle","Glen Mills PA ","USA");
+        Customer customer = new Customer("102", "Happy Biswas", "784 Elton Farm Circle", "Glen Mills PA ", "USA");
 
-        Order order = amazonOd.createOrder(oderItems,customer);
+        Order order = amazonOd.createOrder(oderItems, customer);
         amazonOd.createShipment(order);
         amazonOd.createPayment(order);
         amazonOd.PrintOrderDetails(order);
@@ -34,12 +34,12 @@ public class AmazonOrderDetailsSimplified {
 
     }
 
-    public  void PrintOrderDetails(Order order){
+    public void PrintOrderDetails(Order order) {
 
         System.out.println("**************");
         System.out.println("order details");
         System.out.println("**************");
-        System.out.println("order on" + order.getFormattedOrderDate()+ "order #"+ order.getOrderNumber());
+        System.out.println("order on" + order.getFormattedOrderDate() + "order #" + order.getOrderNumber());
         System.out.println("Shipping Address");
         System.out.println(order.getCustomer().getCustomerName());
         System.out.println(order.getCustomer().getStressAddress());
@@ -58,43 +58,37 @@ public class AmazonOrderDetailsSimplified {
         System.out.println("Estimated tax to be collected ");
         System.out.println(order.getFormattedEstimatedTaxes());
         System.out.println("Grand Total");
-        System.out.println(order.getFormattedGrandTotal() +"\n");
-        System.out.println(order.getShipmentStatusAndDate()+ "\n");
+        System.out.println(order.getFormattedGrandTotal() + "\n");
+        System.out.println(order.getShipmentStatusAndDate() + "\n");
 
-        for (OrderItem item : order.orderItems){
+        for (OrderItem item : order.orderItems) {
             System.out.println(item.product.productDescription);
-            System.out.println("quantity"+ item.quantity);
-            System.out.println("Sold By" + item.product.soldBy);
-            System.out.println();
-
-
+            // System.out.println("quantity:" + item.quantity);
+            System.out.println("Sold By:" + item.product.soldBy);
+            System.out.println("sold By:" + item.product.price);
+            System.out.println("Condition:" + item.product.condition);
 
         }
-
-
-
     }
 
-
     // to create customer order we create this method
-    public  Order createOrder(ArrayList<OrderItem> orderItems, Customer customer){
-       // inisialize the order class
+    public Order createOrder(ArrayList<OrderItem> orderItems, Customer customer) {
+        // inisialize the order class
         Order order = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
-        order = new Order("121-58548-7985479",new Date(),orderItems,7.50,customer);
+        order = new Order("121-58548-7985479", new Date(), orderItems, 7.50, customer);
 
         return order;
     }
     //
 
-
-    public ArrayList<OrderItem> createOrderItems(ArrayList<Product>products){
+    public ArrayList<OrderItem> createOrderItems(ArrayList<Product> products) {
 
         ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();
 
-        for ( int i = 0; i <= products.size()-1; i++ ){
-            if (i% 2 !=0){
-                orderItems.add(new OrderItem(products.get(i),i ));
+        for (int i = 0; i <= products.size(); i++) {
+            if (i % 2 != 0) {
+                orderItems.add(new OrderItem(products.get(i), i));
 
             }
 
@@ -102,52 +96,48 @@ public class AmazonOrderDetailsSimplified {
         return orderItems;
     }
 
-    public void addProducts(ArrayList<Product> products){
-        products.add(new Product("101-25","Books","Basic Java",
-                "Amazon.com",8.99, Product.Condition.New));
+    public void addProducts(ArrayList<Product> products) {
+        products.add(new Product("101-25", "Books", "Basic Java",
+                "Amazon.com", 8.99, Product.Condition.New));
 
-        products.add(new Product("101-26","Books","GITOBITAN",
-                "Amazon.com",10.99, Product.Condition.New));
+        products.add(new Product("101-26", "Books", "GITOBITAN",
+                "Amazon.com", 10.99, Product.Condition.New));
 
-        products.add(new Product("101-27","Books"," Design and Development",
-                "Amazon.com",9.99, Product.Condition.New));
+        products.add(new Product("101-27", "Books", " Design and Development",
+                "Amazon.com", 9.99, Product.Condition.New));
 
-        products.add(new Product("101-28","Books","Fundamental CyberSecurity",
-                "Amazon.com",8.99, Product.Condition.New));
+        products.add(new Product("101-28", "Books", "Fundamental CyberSecurity",
+                "Amazon.com", 8.99, Product.Condition.New));
 
-        products.add(new Product("101-29","Books","Software Development",
-                "Amazon.com",5.99, Product.Condition.New));
+        products.add(new Product("101-29", "Books", "Software Development",
+                "Amazon.com", 5.99, Product.Condition.New));
 
-        products.add(new Product("101-30","Books","Basic Wen Design and Development",
-                "Amazon.com",7.99,Product.Condition.Used));
+        products.add(new Product("101-30", "Books", "Basic Wen Design and Development",
+                "Amazon.com", 7.99, Product.Condition.Used));
     }
 
-    public void createShipment(Order order){
-        try{
+    public void createShipment(Order order) {
+        try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Shipment shipment = new Shipment("121212","UPS", Shipment.ShipmentStatus.Delivered, "ya4215522155225",
-                    dateFormat.parse("08/22/2021"),dateFormat.parse("08/25/2021"), Shipment.ShipmentSpeed.TwoDay);
+            Shipment shipment = new Shipment("121212", "UPS", Shipment.ShipmentStatus.Delivered, "ya4215522155225",
+                    dateFormat.parse("08/22/2021"), dateFormat.parse("08/25/2021"), Shipment.ShipmentSpeed.TwoDay);
             order.shipment = shipment;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(" Just Exception");
         }
     }
 
-    public void createPayment(Order order){
+    public void createPayment(Order order) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            order.payment = new Payment(Payment.PaymentType.CreditCard,"0101217895","Amazon.com visa",order.getGrandTotal(),
+            order.payment = new Payment(Payment.PaymentType.CreditCard, "0101217895", "Amazon.com visa", order.getGrandTotal(),
                     dateFormat.parse("08/22/2021"));
-        }
-        catch (Exception e){
-           System.out.println("Just Exception" );
+        } catch (Exception e) {
+            System.out.println("Just Exception");
         }
     }
 
-
-
-    public void printInvoice(Order order){
+    public void printInvoice(Order order) {
         System.out.println();
     }
 

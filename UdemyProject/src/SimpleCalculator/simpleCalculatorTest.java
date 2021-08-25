@@ -1,9 +1,9 @@
 package SimpleCalculator;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 public class simpleCalculatorTest {
-    @Test
+   // @Test
     public void whenOneIntegerIsPassed(){
         simpleCalculator.validateNumber("78");
         //assertTrue(true);
